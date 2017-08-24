@@ -1,0 +1,13 @@
+LANG="en_US.UTF-8"
+source /etc/profile
+MAVEN_PATH=/data/lmq/sparkes/lib
+
+for i in ${MAVEN_PATH}/*.jar; do
+  SPARK_CLASSPATH=$i,$SPARK_CLASSPATH
+done
+echo $SPARK_CLASSPATH
+nohup spark-submit --jars $SPARK_CLASSPATH \
+--driver-memory 1g \
+--conf "spark.eventLog.enabled=false"  \
+--class com.es.test.Test \
+/data/lmq/sparkes/reporting-online-rtb-2.0.0.jar
